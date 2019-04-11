@@ -1,0 +1,190 @@
+#!/bin/sh
+echo What is your name?
+read MY_NAME
+echo "Hello $MY_NAME - hope you're well."
+
+-------------------------------------
+
+#!/bin/sh
+echo "MYVAR is: $MYVAR"
+MYVAR="hi there"
+echo "MYVAR is: $MYVAR"
+-------------------------------------
+$ MYVAR=hello
+$ echo $MYVAR
+hello
+$ . ./myvar2.sh
+MYVAR is: hello
+MYVAR is: hi there
+$ echo $MYVAR
+hi there
+------------------------------------
+#!/bin/sh
+echo "What is your name?"
+read USER_NAME
+echo "Hello $USER_NAME"
+echo "I will create you a file called $USER_NAME_file"
+touch $USER_NAME_file
+-------------------------------------
+#!/bin/sh
+echo "What is your name?"
+read USER_NAME
+echo "Hello $USER_NAME"
+echo "I will create you a file called ${USER_NAME}_file"
+touch "${USER_NAME}_file"
+------------------------------------
+$ echo *
+case.shtml escape.shtml first.shtml 
+functions.shtml hints.shtml index.shtml 
+ip-primer.txt raid1+0.txt
+$ echo *txt
+ip-primer.txt raid1+0.txt
+$ echo "*"
+*
+$ echo "*txt"
+*txt
+-------------------------------------
+#!/bin/sh
+for i in 1 2 3 4 5
+do
+  echo "Looping ... number $i"
+done
+-------------------------------------
+#!/bin/sh
+for i in hello 1 * 2 goodbye 
+do
+  echo "Looping ... i is set to $i"
+done
+-----------------------------------
+#!/bin/sh
+INPUT_STRING=hello
+while [ "$INPUT_STRING" != "bye" ]
+do
+  echo "Please type something in (bye to quit)"
+  read INPUT_STRING
+  echo "You typed: $INPUT_STRING"
+done
+-----------------------------------
+#!/bin/sh
+while read f
+do
+  case $f in
+	hello)		echo English	;;
+	howdy)		echo American	;;
+	gday)		echo Australian	;;
+	bonjour)	echo French	;;
+	"guten tag")	echo German	;;
+	*)		echo Unknown Language: $f
+		;;
+   esac
+done < myfile
+------------------------------------
+#!/bin/sh
+if [ "$X" -lt "0" ]
+then
+  echo "X is less than zero"
+fi
+if [ "$X" -gt "0" ]; then
+  echo "X is more than zero"
+fi
+[ "$X" -le "0" ] && \
+      echo "X is less than or equal to  zero"
+[ "$X" -ge "0" ] && \
+      echo "X is more than or equal to zero"
+[ "$X" = "0" ] && \
+      echo "X is the string or number \"0\""
+[ "$X" = "hello" ] && \
+      echo "X matches the string \"hello\""
+[ "$X" != "hello" ] && \
+      echo "X is not the string \"hello\""
+[ -n "$X" ] && \
+      echo "X is of nonzero length"
+[ -f "$X" ] && \
+      echo "X is the path of a real file" || \
+      echo "No such file: $X"
+[ -x "$X" ] && \
+      echo "X is the path of an executable file"
+[ "$X" -nt "/etc/passwd" ] && \
+      echo "X is a file which is newer than /etc/passwd"
+------------------------------
+echo -en "Please guess the magic number: "
+read X
+echo $X | grep "[^0-9]" > /dev/null 2>&1
+if [ "$?" -eq "0" ]; then
+  # If the grep found something other than 0-9
+  # then it's not an integer.
+  echo "Sorry, wanted a number"
+else
+  # The grep found only 0-9, so it's an integer. 
+  # We can safely do a test on it.
+  if [ "$X" -eq "7" ]; then
+    echo "You entered the magic number!"
+  fi
+fi
+-------------------------------
+#!/bin/sh
+X=0
+while [ -n "$X" ]
+do
+  echo "Enter some text (RETURN to quit)"
+  read X
+  echo "You said: $X"
+done
+-------------------------------
+$ ./test2.sh
+Enter some text (RETURN to quit)
+fred
+You said: fred
+Enter some text (RETURN to quit)
+wilma
+You said: wilma
+Enter some text (RETURN to quit)
+
+You said:
+$ 
+-------------------------------
+if [ "$X" -lt "0" ]
+then
+  echo "X is less than zero"
+fi
+
+..........  and  ........
+
+if [ ! -n "$X" ]; then
+  echo "You said: $X"
+fi
+------------------------------
+#!/bin/sh
+
+echo "Please talk to me ..."
+while :
+do
+  read INPUT_STRING
+  case $INPUT_STRING in
+	hello)
+		echo "Hello yourself!"
+		;;
+	bye)
+		echo "See you again!"
+		break
+		;;
+	*)
+		echo "Sorry, I don't understand"
+		;;
+  esac
+done
+echo 
+echo "That's all folks!"
+------------------------------------
+$ ./talk.sh
+Please talk to me ...
+hello
+Hello yourself!
+What do you think of politics?
+Sorry, I don't understand
+bye
+See you again!
+
+That's all folks!
+$
+----------------------------------
